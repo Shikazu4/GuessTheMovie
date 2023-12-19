@@ -1,0 +1,44 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+#game-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+#movie-image {
+    width: 600px;
+    height: 400px;
+    margin-bottom: 20px;
+}
+
+#guess-input {
+    padding: 10px;
+    font-size: 16px;
+}
+
+#submit-guess {
+    padding: 10px;
+    font-size: 16px;
+}
+
+#past-guesses {
+    margin-top: 20px;
+}
+
+#button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.image-button {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 5px 10px;
+    font-size: 14px;
+}
