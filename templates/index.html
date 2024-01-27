@@ -8,10 +8,13 @@
     
     <script src="{{ url_for('static', filename='awesomplete.js') }}" defer></script>
     <script src="{{ url_for('static', filename='script.js') }}" defer></script>  <!-- Corrected path -->
-    <title>Movie Guessing Game</title>
+    <title>CineGuessr</title>
 </head>
 <body>
+    <h1 id="heading"> CineGuessr </h1>   
+    <a href="/templates/custom.html">Custom Game</a>
     <div id="game-container">
+        
         <img id="movie-image" 
         src="{{ url_for('static', filename='imageuploads/blank.jpg') }}"
          alt="Movie Image">

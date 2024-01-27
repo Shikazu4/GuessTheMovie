@@ -3,7 +3,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const submitButton = document.getElementById('submit-guess');
     const movieImage = document.getElementById('movie-image');
     const buttons = document.querySelectorAll('.image-button');
-    movieImage.src = `/static/imageuploads/1.jpg`;
+
+    var url_string = (window.location.href).toLocaleLowerCase();
+    var url = new URL(url_string);
+    var query=url.searchParams.get("query");
+    console.log(query);
+
+    query = decrypt(query);
+
+    function decrypt(a){
+        // write code to decrypt the query
+        return a;
+    }
+
+    if(query==null){
+        query='Hello';
+    }
+
+    var correct_name='';
+    movieImage.src = `/static/imageuploads/${query}/1.jpg`;
+
 
     // var see = ['Check',"working",'hope',"it Works'"];
     let attempts = 0;
@@ -15,6 +34,9 @@ document.addEventListener('DOMContentLoaded', function() {
     new Awesomplete(guessInput, { list: see });
 
     const isValidGuess = (guess) => {
+          if(guess==query){
+            return true;
+          }
           return see.includes(guess);s
     };
 
@@ -33,7 +55,8 @@ document.addEventListener('DOMContentLoaded', function() {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `guess=${encodeURIComponent(guess)}`,  // Ensure proper encoding
+            body: `guess=${encodeURIComponent(guess)}&query=${encodeURIComponent(query)}` ,
+            // body: `query=${encodeURIComponent(query)}`, 
         })
         .then(response => response.json())
         .then(data => {
@@ -52,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (attempts < buttons.length) {
                 currentImage = attempts + 1;
                 setTimeout(() => {
-                    movieImage.src = `/static/imageuploads/${currentImage}.jpg`;
+                    movieImage.src = `/static/imageuploads/${query}/${currentImage}.jpg`;
                 }, 1); // Delay (in milliseconds) before loading the next image
             }
 
@@ -81,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
     buttons.forEach(button => {
         button.addEventListener('click', function() {
             const imageNumber = parseInt(this.dataset.image);
-            movieImage.src = `/static/imageuploads/${imageNumber}.jpg`;
+            movieImage.src = `/static/imageuploads/${query}/${imageNumber}.jpg`;
             currentImage = imageNumber;
         });
     });

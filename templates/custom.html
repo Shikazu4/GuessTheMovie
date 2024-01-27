@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineGuessr</title>
+</head>
+<body>
+    <h1>Create your own puzzle</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="image1">Image 1:</label>
+        <input type="file" id="image1" name="image1" accept="image/*" required><br><br>
+        <label for="image2">Image 2:</label>
+        <input type="file" id="image2" name="image2" accept="image/*" required><br><br>
+        <label for="image3">Image 3:</label>
+        <input type="file" id="image3" name="image3" accept="image/*" required><br><br>
+        <label for="image4">Image 4:</label>
+        <input type="file" id="image4" name="image4" accept="image/*" required><br><br>
+        <label for="image5">Image 5:</label>
+        <input type="file" id="image5" name="image5" accept="image/*" required><br><br>
+        <button type="button" id="submitBtn" onclick="uploadImages()">Submit</button>
+        <button type="button" id="generateBtn" style="display: none;" onclick="generateURL()">Generate URL</button>
+
+    </form>
+
+    <div id="urlContainer"></div>
+
+    <script>
+        function uploadImages() {
+            var form = document.getElementById('uploadForm');
+            var formData = new FormData(form);
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('POST', '/upload', true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    document.getElementById('urlContainer').innerText = xhr.responseText;
+                    document.getElementById('generateBtn').style.display = 'block'; // Show Generate URL button
+
+                } else {
+                    alert('Error uploading images!');
+                }
+            };
+            xhr.send(formData);
+        }
+
+        function generateURL() {
+            var name = document.getElementById('name').value;
+            var url = window.location.origin + '?query=' + name;
+            document.getElementById('urlContainer').innerText = url;
+
+        //copying the URL
+        var tempInput = document.createElement("input");
+            tempInput.setAttribute("value", url);
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            
+            alert("URL is copied for you, Share with your friends to let guess");
+        }
+    </script>
+</body>
+</html>
